@@ -7,8 +7,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
 
-import org.apache.http.client.methods.HttpRequestBase;
-
 /**
  * 
  * @author rschreijer
@@ -28,7 +26,7 @@ public interface RequestModel<V> {
 	 * @throws IOException IO Error
 	 * @since Mar 22, 2013
 	 */
-	public HttpRequestBase getRequest() throws IOException;
+	//public HttpRequestBase getRequest() throws IOException;
 	
 	/**
 	 * <p>Checks weather the response-status is as-expected 

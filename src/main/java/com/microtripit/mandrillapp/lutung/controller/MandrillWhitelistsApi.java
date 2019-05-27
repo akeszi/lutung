@@ -6,21 +6,15 @@ import java.util.HashMap;
 import com.microtripit.mandrillapp.lutung.MandrillApi;
 import com.microtripit.mandrillapp.lutung.model.MandrillApiError;
 import com.microtripit.mandrillapp.lutung.model.MandrillHelperClasses.EmailClass;
+import com.microtripit.mandrillapp.lutung.model.MandrillUrlFetcher;
 import com.microtripit.mandrillapp.lutung.view.MandrillWhitelistEntry;
 
-public class MandrillWhitelistsApi {
-	private final String key;
-	private final String rootUrl;
+public class MandrillWhitelistsApi extends BaseMandrillApi {
 
-	public MandrillWhitelistsApi(final String key, final String url) {
-		this.key = key;
-		this.rootUrl = url;
+	public MandrillWhitelistsApi(String key, String rootUrl, MandrillUrlFetcher mandrillUrlFetcher) {
+		super(key, rootUrl, mandrillUrlFetcher);
 	}
-	
-	public MandrillWhitelistsApi(final String key) {
-		this(key, MandrillApi.rootUrl);
-	}
-	
+
 	/**
 	 * <p>Adds an email to your email rejection whitelist. If the 
 	 * address is currently on your blacklist, that blacklist 
@@ -35,7 +29,7 @@ public class MandrillWhitelistsApi {
 		
 		final HashMap<String,Object> params = MandrillUtil.paramsWithKey(key);
 		params.put("email", email);
-		return MandrillUtil.query(rootUrl+ "whitelists/add.json", 
+		return query( "whitelists/add.json", 
 				params, WhitelistsAddResponse.class).getWhether();
 		
 	}
@@ -54,7 +48,7 @@ public class MandrillWhitelistsApi {
 		
 		final HashMap<String,Object> params = MandrillUtil.paramsWithKey(key);
 		params.put("email", email);
-		return MandrillUtil.query(rootUrl+ "whitelists/list.json", 
+		return query( "whitelists/list.json", 
 				params, MandrillWhitelistEntry[].class);
 		
 	}
@@ -71,7 +65,7 @@ public class MandrillWhitelistsApi {
 		
 		final HashMap<String,Object> params = MandrillUtil.paramsWithKey(key);
 		params.put("email", email);
-		return MandrillUtil.query(rootUrl+ "whitelists/delete.json", 
+		return query( "whitelists/delete.json", 
 				params, WhitelistsDeleteResponse.class).getDeleted();
 		
 	}

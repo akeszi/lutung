@@ -4,15 +4,11 @@
 
     <groupId>com.mandrillapp.wrapper.lutung</groupId>
     <artifactId>lutung</artifactId>
-    <version>0.0.9-SNAPSHOT</version>
+    <version>0.0.9-skawa-v1</version>
     <name>lutung</name>
     <description>Mandrill API Client for Java</description>
-    <url>https://github.com/rschreijer/lutung</url>
+    <url>https://github.com/ma1112/lutung</url>
     <inceptionYear>2013</inceptionYear>
-    <organization>
-        <name>Microtrip.it</name>
-        <url>http://www.microtrip.it</url>
-    </organization>
     <packaging>jar</packaging>
     <licenses>
         <license>
@@ -38,13 +34,6 @@
         <java-version>1.6</java-version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-
-    <!-- Scm release info -->
-    <scm>
-        <connection>scm:git:git://github.com/rschreijer/lutung.git</connection>
-        <developerConnection>scm:git:git@github.com:rschreijer/lutung.git</developerConnection>
-        <url>http://github.com/rschreijer/lutung</url>
-    </scm>
 
     <build>
         <plugins>
@@ -85,62 +74,6 @@
             </plugin>
         </plugins>
     </build>
-
-    <profiles>
-        <profile>
-            <id>release</id>
-            <activation>
-                <property>
-                    <name>performRelease</name>
-                    <value>true</value>
-                </property>
-            </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-release-plugin</artifactId>
-                        <version>2.4.1</version>
-                        <configuration>
-                            <arguments>-Dgpg.passphrase=${gpg.passphrase}</arguments>
-                        </configuration>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-gpg-plugin</artifactId>
-                        <version>1.4</version>
-                        <configuration>
-                            <passphrase>${gpg.passphrase}</passphrase>
-                        </configuration>
-                        <executions>
-                            <execution>
-                                <id>sign-artifacts</id>
-                                <phase>verify</phase>
-                                <goals>
-                                    <goal>sign</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
-
-    <distributionManagement>
-        <!-- Sonatype repo info -->
-        <snapshotRepository>
-            <id>sonatype-nexus-snapshots</id>
-            <name>Sonatype Nexus snapshot repository</name>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-        </snapshotRepository>
-        <repository>
-            <id>sonatype-nexus-staging</id>
-            <name>Sonatype Nexus release repository</name>
-            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-        </repository>
-    </distributionManagement>
-
     <dependencies>
 
         <!-- GSON JSON mapper -->
@@ -149,20 +82,6 @@
             <artifactId>gson</artifactId>
             <version>2.8.2</version>
             <scope>compile</scope>
-        </dependency>
-
-        <!-- Apache Http Client -->
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpclient</artifactId>
-            <version>4.5.3</version>
-            <scope>compile</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>commons-logging</groupId>
-                    <artifactId>commons-logging</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
 
         <dependency>
@@ -196,6 +115,19 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.10</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.5.3</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
             <scope>test</scope>
         </dependency>
 

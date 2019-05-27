@@ -10,33 +10,27 @@ import com.microtripit.mandrillapp.lutung.MandrillApi;
 import com.microtripit.mandrillapp.lutung.model.MandrillApiError;
 import com.microtripit.mandrillapp.lutung.model.MandrillHelperClasses.MandrillRejectsDeleted;
 import com.microtripit.mandrillapp.lutung.model.MandrillHelperClasses.MandrillRejectsAdded;
+import com.microtripit.mandrillapp.lutung.model.MandrillUrlFetcher;
 import com.microtripit.mandrillapp.lutung.view.MandrillRejectsEntry;
 
 /**
  * @author rschreijer
  * @since Mar 19, 2013
  */
-public class MandrillRejectsApi {
-	private final String key;
-	private final String rootUrl;
+public class MandrillRejectsApi extends BaseMandrillApi {
 
-	public MandrillRejectsApi(final String key, final String url) {
-		this.key = key;
-		this.rootUrl = url;
+	public MandrillRejectsApi(String key, String rootUrl, MandrillUrlFetcher mandrillUrlFetcher) {
+		super(key, rootUrl, mandrillUrlFetcher);
 	}
-	
-	public MandrillRejectsApi(final String key) {
-		this(key, MandrillApi.rootUrl);
-	}
-	
-	public Boolean add(final String email, final String comment, 
-			final String subaccount) throws MandrillApiError, IOException {
+
+	public Boolean add(final String email, final String comment,
+	                   final String subaccount) throws MandrillApiError, IOException {
 		
 		final HashMap<String,Object> params = MandrillUtil.paramsWithKey(key);
 		params.put("email", email);
 		params.put("comment", comment);
 		params.put("subaccount", subaccount);
-		return MandrillUtil.query(rootUrl+ "rejects/add.json", 
+		return query( "rejects/add.json", 
 				params, MandrillRejectsAdded.class).getAdded();
 		
 	}
@@ -86,7 +80,7 @@ public class MandrillRejectsApi {
 		if(subaccount != null) {
 			params.put("subaccount", subaccount);
 		}
-		return MandrillUtil.query(rootUrl+ "rejects/list.json", 
+		return query( "rejects/list.json", 
 				params, MandrillRejectsEntry[].class);
 		
 	}
@@ -130,7 +124,7 @@ public class MandrillRejectsApi {
 		if(subaccount != null) {
 			params.put("subaccount", subaccount);
 		}
-		return MandrillUtil.query(rootUrl+ "rejects/delete.json", 
+		return query( "rejects/delete.json", 
 				params, MandrillRejectsDeleted.class).getDeleted();
 		
 	}

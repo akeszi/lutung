@@ -7,6 +7,7 @@ import java.io.IOException;
 
 import com.microtripit.mandrillapp.lutung.MandrillApi;
 import com.microtripit.mandrillapp.lutung.model.MandrillApiError;
+import com.microtripit.mandrillapp.lutung.model.MandrillUrlFetcher;
 import com.microtripit.mandrillapp.lutung.view.MandrillSender;
 import com.microtripit.mandrillapp.lutung.view.MandrillUserInfo;
 
@@ -15,19 +16,12 @@ import com.microtripit.mandrillapp.lutung.view.MandrillUserInfo;
  * @author rschreijer
  * @since Mar 19, 2013
  */
-public class MandrillUsersApi {
-	private final String key;
-	private final String rootUrl;
+public class MandrillUsersApi extends BaseMandrillApi {
 
-	public MandrillUsersApi(final String key, final String url) {
-		this.key = key;
-		this.rootUrl = url;
+	public MandrillUsersApi(String key, String rootUrl, MandrillUrlFetcher mandrillUrlFetcher) {
+		super(key, rootUrl, mandrillUrlFetcher);
 	}
-	
-	public MandrillUsersApi(final String key) {
-		this(key, MandrillApi.rootUrl);
-	}
-	
+
 	/**
 	 * <p>Get information about the account for the given api key.</p>
 	 * @return The information about the API-connected user.
@@ -35,7 +29,7 @@ public class MandrillUsersApi {
 	 * @throws IOException IO Error
 	 */
 	public MandrillUserInfo info() throws MandrillApiError, IOException {
-		return MandrillUtil.query(rootUrl+ "users/info.json", 
+		return query("users/info.json",
 				MandrillUtil.paramsWithKey(key), MandrillUserInfo.class);
 		
 	}
@@ -47,7 +41,7 @@ public class MandrillUsersApi {
 	 * @throws IOException IO Error
 	 */
 	public String ping() throws MandrillApiError, IOException {
-		return MandrillUtil.query(rootUrl+ "users/ping.json", 
+		return query("users/ping.json",
 				MandrillUtil.paramsWithKey(key), String.class);
 		
 	}
@@ -63,9 +57,8 @@ public class MandrillUsersApi {
 	public MandrillSender[] senders() throws MandrillApiError, 
 			IOException {
 		
-		return MandrillUtil.query(rootUrl+ "users/senders.json", 
+		return query("users/senders.json",
 				MandrillUtil.paramsWithKey(key), MandrillSender[].class);
 		
 	}
-
 }

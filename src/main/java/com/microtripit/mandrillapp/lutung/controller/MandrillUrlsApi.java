@@ -8,6 +8,7 @@ import java.util.HashMap;
 
 import com.microtripit.mandrillapp.lutung.MandrillApi;
 import com.microtripit.mandrillapp.lutung.model.MandrillApiError;
+import com.microtripit.mandrillapp.lutung.model.MandrillUrlFetcher;
 import com.microtripit.mandrillapp.lutung.view.MandrillTimeSeries;
 import com.microtripit.mandrillapp.lutung.view.MandrillUrl;
 
@@ -15,19 +16,13 @@ import com.microtripit.mandrillapp.lutung.view.MandrillUrl;
  * @author rschreijer
  * @since Mar 19, 2013
  */
-public class MandrillUrlsApi {
-	private final String key;
-	private final String rootUrl;
+public class MandrillUrlsApi extends BaseMandrillApi {
 
-	public MandrillUrlsApi(final String key, final String url) {
-		this.key = key;
-		this.rootUrl = url;
+
+	public MandrillUrlsApi(String key, String rootUrl, MandrillUrlFetcher mandrillUrlFetcher) {
+		super(key, rootUrl, mandrillUrlFetcher);
 	}
-	
-	public MandrillUrlsApi(final String key) {
-		this(key, MandrillApi.rootUrl);
-	}
-	
+
 	/**
 	 * <p>Get the 100 most clicked URLs.</p>
 	 * @return
@@ -38,8 +33,7 @@ public class MandrillUrlsApi {
 	public MandrillUrl[] list() 
 			throws MandrillApiError, IOException {
 		
-		return MandrillUtil.query(
-				rootUrl+ "urls/list.json", 
+		return query("urls/list.json",
 				MandrillUtil.paramsWithKey(key), 
 				MandrillUrl[].class);
 		
@@ -59,7 +53,7 @@ public class MandrillUrlsApi {
 		
 		final HashMap<String,Object> params = MandrillUtil.paramsWithKey(key);
 		params.put("q", query);
-		return MandrillUtil.query(rootUrl+ "urls/search.json", 
+		return query("urls/search.json",
 				params, MandrillUrl[].class);
 		
 	}
@@ -77,7 +71,7 @@ public class MandrillUrlsApi {
 		
 		final HashMap<String,Object> params = MandrillUtil.paramsWithKey(key);
 		params.put("url", url);
-		return MandrillUtil.query(rootUrl+ "urls/time-series.json", 
+		return query("urls/time-series.json",
 				params, MandrillTimeSeries[].class);
 		
 	}

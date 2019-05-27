@@ -3,11 +3,14 @@
  */
 package com.microtripit.mandrillapp.lutung;
 
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
+import java.util.Properties;
 
+import com.microtripit.mandrillapp.lutung.controller.TestMandrillHttpUrlFetcher;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -25,42 +28,63 @@ public abstract class MandrillTestCase {
 	private static final Log log = LogFactory.getLog(MandrillApiTest.class);
 	
 	protected static MandrillApi mandrillApi;
+	protected static String key = null;
+	protected static String toAddress = null;
+	protected static String fromAddress = null;
 	
 	/**
-	 * <p>If you want to run your own tests, either provide a file
-	 * 'myapikey.txt' on your classpath, or simply change this 
-	 * method to return your hard-coded string.</p>
-	 * <p>If you provide a file, this file should ONLY contain your
-	 * Mandrill api key, as plain text in ONLY ONE line. This also 
-	 * allows you to keep your api key secret since 'myapikey.txt'
-	 * is mentioned in .gitignore and will not be pushed to git!</p> 
+	 * <p>If you want to run your own tests, fill in test.properties file.</p>
 	 * @return Your Mandrill API key.
 	 */
-	protected static final String getMandrillApiKey() {
+	private static String getMandrillApiKey() {
+		if (key == null) {
+			getProperties();
+		}
+		return key;
+	}
+
+	protected static final String getToAddress() {
+		if (toAddress == null) {
+			getProperties();
+		}
+		return toAddress;
+	}
+
+	protected static final String getFromAddress() {
+		if (fromAddress == null) {
+			getProperties();
+		}
+		return fromAddress;
+	}
+
+
+	protected static void getProperties() {
 		try {
-			final InputStream is = MandrillTestCase.class.getClassLoader()
-					.getResourceAsStream("myapikey.txt");
-			if(is == null) {
-				throw new FileNotFoundException(
-						"Please change " +MandrillTestCase.class.getCanonicalName()
-						+ ".getMandrillApiKey() to just return your Mandrill " +
-						"api key. The file being loaded in that method is just " +
-						"a security measure ... I didn't want my own api key in " +
-						"a public git repo ;-)");
-			}
-			final String apikey = IOUtils.toString(is, Charset.forName("utf8"));
+			final InputStream is = new FileInputStream("src/test/resources/test.properties");
+			Properties prop = new Properties();
+			prop.load(is);
+
+			key = prop.getProperty("api.key");
+			toAddress = prop.getProperty("to.address");
+			fromAddress = prop.getProperty("from.address");
 			is.close();
-			if(apikey == null || apikey.isEmpty()) {
-				throw new IOException("Empty file 'myapikey.txt'");
+
+			if (key == null || key.isEmpty()) {
+				throw new IOException("Empty property 'api.key'.");
 
 			}
-			return apikey;
+
+			if (toAddress == null || toAddress.isEmpty()) {
+				throw new IOException("Empty property key 'to.address'");
+			}
+
+			if (fromAddress == null || fromAddress.isEmpty()) {
+				throw new IOException("Empty property key 'from.address'");
+			}
 
 		} catch(final IOException e) {
-			log.error("No Mandrill API key defined - " +
-					"please provide your Mandrill API key!", e);
-			return null;
-
+			log.error("Could not read property files. " +
+					"Please fill in properties in resources/test.properties.", e);
 		}
 	}
 	
@@ -68,14 +92,10 @@ public abstract class MandrillTestCase {
 	public static final void runBeforeClass() {
 		final String key = getMandrillApiKey();
 		if(key != null) {
-			mandrillApi = new MandrillApi(key);
+			mandrillApi = new MandrillApi(key, new TestMandrillHttpUrlFetcher());
 		} else {
 			mandrillApi = null;
 		}
-	}
-
-	protected static final String mailToAddress() {
-		return "lutung.mandrill@gmail.com";
 	}
 	
 	@Before

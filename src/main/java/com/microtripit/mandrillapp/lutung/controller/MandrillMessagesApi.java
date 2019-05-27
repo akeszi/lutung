@@ -12,25 +12,19 @@ import java.util.Map;
 
 import com.microtripit.mandrillapp.lutung.MandrillApi;
 import com.microtripit.mandrillapp.lutung.model.MandrillApiError;
+import com.microtripit.mandrillapp.lutung.model.MandrillUrlFetcher;
 import com.microtripit.mandrillapp.lutung.view.*;
 
 /**
  * @author rschreijer
  * @since Mar 19, 2013
  */
-public class MandrillMessagesApi {
-	private final String key;
-	private final String rootUrl;
+public class MandrillMessagesApi extends BaseMandrillApi {
 
-	public MandrillMessagesApi(final String key, final String url) {
-		this.key = key;
-		this.rootUrl = url;
+	public MandrillMessagesApi(String key, String rootUrl, MandrillUrlFetcher mandrillUrlFetcher) {
+		super(key, rootUrl, mandrillUrlFetcher);
 	}
-	
-	public MandrillMessagesApi(final String key) {
-		this(key, MandrillApi.rootUrl);
-	}
-	
+
 	/**
 	 * <p>Send a new transactional message through Mandrill.</p>
 	 * @param m The information on the message to send
@@ -97,7 +91,7 @@ public class MandrillMessagesApi {
 		if(sendAt != null) {
 			params.put("send_at", sendAt);
 		}
-		return MandrillUtil.query(rootUrl+ "messages/send.json", 
+		return query( "messages/send.json", 
 				params, MandrillMessageStatus[].class);
 		
 	}
@@ -209,7 +203,7 @@ public class MandrillMessagesApi {
 		if(sendAt != null) {
 			params.put("send_at", sendAt);
 		}
-		return MandrillUtil.query( rootUrl + "messages/send-template.json",
+		return query( rootUrl + "messages/send-template.json",
                 params, MandrillMessageStatus[].class );
 		
 	}
@@ -237,7 +231,7 @@ public class MandrillMessagesApi {
 			params.put("api_keys", search.getApiKeys());
 			params.put("limit", search.getLimit());
 		}
-		return MandrillUtil.query(rootUrl+ "messages/search.json", 
+		return query( "messages/search.json", 
 				params,	MandrillMessageInfo[].class);
 		
 	}
@@ -263,7 +257,7 @@ public class MandrillMessagesApi {
 			params.put("tags", search.getTags());
 			params.put("senders", search.getSenders());
 		}
-		return MandrillUtil.query(rootUrl+ "messages/search-time-series.json", 
+		return query( "messages/search-time-series.json", 
 				params,	MandrillTimeSeries[].class);
 		
 	}
@@ -281,7 +275,7 @@ public class MandrillMessagesApi {
 		
 		final HashMap<String,Object> params = MandrillUtil.paramsWithKey(key);
 		params.put("id", id);
-		return MandrillUtil.query(rootUrl+ "messages/info.json", 
+		return query( "messages/info.json", 
 				params,	MandrillMessageInfo.class);
 		
 	}
@@ -299,7 +293,7 @@ public class MandrillMessagesApi {
 
         final HashMap<String,Object> params = MandrillUtil.paramsWithKey(key);
         params.put("id", id);
-        return MandrillUtil.query(rootUrl+ "messages/content.json",
+        return query( "messages/content.json",
                 params,	MandrillMessageContent.class);
 
     }
@@ -318,7 +312,7 @@ public class MandrillMessagesApi {
 		
 		final HashMap<String,Object> params = MandrillUtil.paramsWithKey(key);
 		params.put("raw_message", rawMessage);
-		return MandrillUtil.query(rootUrl+ "messages/parse.json",
+		return query( "messages/parse.json",
 				params, MandrillMessage.class);
 		
 	}
@@ -369,7 +363,7 @@ public class MandrillMessagesApi {
 		if(returnPathDomain != null) {
 			params.put("return_path_domain", returnPathDomain);
 		}
-		return MandrillUtil.query(rootUrl+ "messages/send-raw.json", 
+		return query( "messages/send-raw.json", 
 				params,	MandrillMessageStatus[].class);
 		
 	}
@@ -386,7 +380,7 @@ public class MandrillMessagesApi {
 		
 		final HashMap<String,Object> params = MandrillUtil.paramsWithKey(key);
 		params.put("to", to);
-		return MandrillUtil.query(rootUrl+ "messages/list-scheduled.json", 
+		return query( "messages/list-scheduled.json", 
 				params,	MandrillScheduledMessageInfo[].class);
 		
 	}
@@ -404,7 +398,7 @@ public class MandrillMessagesApi {
 		
 		final HashMap<String,Object> params = MandrillUtil.paramsWithKey(key);
 		params.put("id", id);
-		return MandrillUtil.query(rootUrl+ "messages/cancel-scheduled.json", 
+		return query( "messages/cancel-scheduled.json", 
 				params,	MandrillScheduledMessageInfo.class);
 		
 	}
@@ -426,7 +420,7 @@ public class MandrillMessagesApi {
 		final HashMap<String,Object> params = MandrillUtil.paramsWithKey(key);
 		params.put("id", id);
 		params.put("send_at", send_at);
-		return MandrillUtil.query(rootUrl+ "messages/reschedule.json", 
+		return query( "messages/reschedule.json", 
 				params,	MandrillScheduledMessageInfo.class);
 		
 	}

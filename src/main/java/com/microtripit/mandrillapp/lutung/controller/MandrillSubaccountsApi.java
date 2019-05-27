@@ -5,21 +5,15 @@ import java.util.HashMap;
 
 import com.microtripit.mandrillapp.lutung.MandrillApi;
 import com.microtripit.mandrillapp.lutung.model.MandrillApiError;
+import com.microtripit.mandrillapp.lutung.model.MandrillUrlFetcher;
 import com.microtripit.mandrillapp.lutung.view.MandrillSubaccountInfo;
 
-public class MandrillSubaccountsApi {
-	private final String key;
-	private final String rootUrl;
+public class MandrillSubaccountsApi extends BaseMandrillApi{
 
-	public MandrillSubaccountsApi(final String key, final String url) {
-		this.key = key;
-		this.rootUrl = url;
+	public MandrillSubaccountsApi(String key, String rootUrl, MandrillUrlFetcher mandrillUrlFetcher) {
+		super(key, rootUrl, mandrillUrlFetcher);
 	}
-	
-	public MandrillSubaccountsApi(final String key) {
-		this(key, MandrillApi.rootUrl);
-	}
-	
+
 	/**
 	 * <p>Get the list of subaccounts defined for the account, 
 	 * optionally filtered by a prefix.</p>
@@ -34,7 +28,7 @@ public class MandrillSubaccountsApi {
 		
 		final HashMap<String,Object> params = MandrillUtil.paramsWithKey(key);
 		params.put("q", q);
-		return MandrillUtil.query(rootUrl+ "subaccounts/list.json", 
+		return query( "subaccounts/list.json", 
 				params, MandrillSubaccountInfo[].class);
 		
 	}
@@ -63,7 +57,7 @@ public class MandrillSubaccountsApi {
 		params.put("name", name);
 		params.put("notes", notes);
 		params.put("custom_quota", customQuota);
-		return MandrillUtil.query(rootUrl+ "subaccounts/add.json", 
+		return query( "subaccounts/add.json", 
 				params, MandrillSubaccountInfo.class);
 		
 	}
@@ -80,7 +74,7 @@ public class MandrillSubaccountsApi {
 		
 		final HashMap<String,Object> params = MandrillUtil.paramsWithKey(key);
 		params.put("id", id);
-		return MandrillUtil.query(rootUrl+ "subaccounts/info.json", 
+		return query( "subaccounts/info.json", 
 				params, MandrillSubaccountInfo.class);
 		
 	}
@@ -109,7 +103,7 @@ public class MandrillSubaccountsApi {
 		params.put("name", name);
 		params.put("notes", notes);
 		params.put("customQuota", customQuota);
-		return MandrillUtil.query(rootUrl+ "subaccounts/update.json", 
+		return query( "subaccounts/update.json", 
 				params, MandrillSubaccountInfo.class);
 		
 	}
@@ -128,7 +122,7 @@ public class MandrillSubaccountsApi {
 		
 		final HashMap<String,Object> params = MandrillUtil.paramsWithKey(key);
 		params.put("id", id);
-		return MandrillUtil.query(rootUrl+ "subaccounts/delete.json", 
+		return query( "subaccounts/delete.json", 
 				params, MandrillSubaccountInfo.class);
 		
 	}
@@ -147,7 +141,7 @@ public class MandrillSubaccountsApi {
 		
 		final HashMap<String,Object> params = MandrillUtil.paramsWithKey(key);
 		params.put("id", id);
-		return MandrillUtil.query(rootUrl+ "subaccounts/pause.json", 
+		return query( "subaccounts/pause.json", 
 				params, MandrillSubaccountInfo.class);
 		
 	}
@@ -164,7 +158,7 @@ public class MandrillSubaccountsApi {
 		
 		final HashMap<String,Object> params = MandrillUtil.paramsWithKey(key);
 		params.put("id", id);
-		return MandrillUtil.query(rootUrl+ "subaccounts/resume.json", 
+		return query( "subaccounts/resume.json", 
 				params, MandrillSubaccountInfo.class);
 		
 	}

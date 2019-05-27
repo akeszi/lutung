@@ -20,7 +20,6 @@ import org.junit.Test;
 import com.microtripit.mandrillapp.lutung.MandrillTestCase;
 import com.microtripit.mandrillapp.lutung.model.LutungGsonUtils;
 import com.microtripit.mandrillapp.lutung.model.MandrillApiError;
-import com.microtripit.mandrillapp.lutung.model.MandrillApiError.MandrillError;
 import com.microtripit.mandrillapp.lutung.view.MandrillMessage;
 import com.microtripit.mandrillapp.lutung.view.MandrillMessage.Recipient;
 import com.microtripit.mandrillapp.lutung.view.MandrillMessage.Recipient.Type;
@@ -49,12 +48,12 @@ public final class MandrillMessagesApiTest extends MandrillTestCase {
 	@Test
 	public final void testSend02() throws IOException, MandrillApiError {
 	    Recipient to = new Recipient();
-	    to.setEmail(mailToAddress());
+	    to.setEmail(getToAddress());
 	    to.setType(Type.TO);
 	    List<Recipient> recipients = new ArrayList<MandrillMessage.Recipient>();
 	    recipients.add(to);
 	    MandrillMessage message = new MandrillMessage();
-	    message.setFromEmail("from@test.com");
+	    message.setFromEmail(getFromAddress());
 	    message.setTo(recipients);
         MandrillMessageStatus[] status = mandrillApi.messages().send(message, false);
         Assert.assertNotNull(status);
@@ -99,12 +98,12 @@ public final class MandrillMessagesApiTest extends MandrillTestCase {
         Assert.assertNotNull(t.getName());
 
         Recipient to = new Recipient();
-        to.setEmail(mailToAddress());
+        to.setEmail(getToAddress());
         to.setType(Type.TO);
         List<Recipient> recipients = new ArrayList<MandrillMessage.Recipient>();
         recipients.add(to);
         MandrillMessage message = new MandrillMessage();
-        message.setFromEmail("from@test.com");
+        message.setFromEmail(getFromAddress());
         message.setTo(recipients);
         MandrillMessageStatus[] status = mandrillApi.messages()
                                                     .sendTemplate(templateName,
@@ -160,7 +159,7 @@ public final class MandrillMessagesApiTest extends MandrillTestCase {
 	@Test
 	public void testParse01() throws IOException, MandrillApiError {
 		String testUnparsedMsg = "From: sender@example.com\n" +
-				"To: " + mailToAddress()+ "\n" +
+				"To: " + getToAddress()+ "\n" +
 				"Subject: Lutung test subject\n\n" +
 				"Sup mandrill !";
 		MandrillMessage parsedMessage = mandrillApi.messages().parse(testUnparsedMsg);

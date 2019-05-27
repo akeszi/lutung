@@ -16,6 +16,7 @@ import com.microtripit.mandrillapp.lutung.controller.MandrillUrlsApi;
 import com.microtripit.mandrillapp.lutung.controller.MandrillUsersApi;
 import com.microtripit.mandrillapp.lutung.controller.MandrillWebhooksApi;
 import com.microtripit.mandrillapp.lutung.controller.MandrillWhitelistsApi;
+import com.microtripit.mandrillapp.lutung.model.MandrillUrlFetcher;
 
 /**
  * @author rschreijer
@@ -26,6 +27,7 @@ public class MandrillApi {
 
 	private String key;
 	private final MandrillUsersApi users;
+	private final MandrillUrlFetcher mandrillUrlFetcher;
 	private final MandrillMessagesApi messages;
 	private final MandrillTagsApi tags;
 	private final MandrillRejectsApi rejects;
@@ -38,12 +40,12 @@ public class MandrillApi {
 	private final MandrillInboundApi inbound;
 	private final MandrillExportsApi exports;
 	private final MandrillIpsApi ips;
-	
-	public MandrillApi(final String key) {
-		this(key, rootUrl);
+
+	public MandrillApi(final String key, MandrillUrlFetcher mandrillUrlFetcher) {
+		this(key, rootUrl, mandrillUrlFetcher);
 	}
-	
-	public MandrillApi(final String key, final String rootUrl) {
+
+	public MandrillApi(final String key, final String rootUrl, MandrillUrlFetcher mandrillUrlFetcher) {
 		if(key == null) {
 			throw new NullPointerException(
 					"'key' is null; please provide Mandrill API key");
@@ -52,20 +54,26 @@ public class MandrillApi {
 			throw new NullPointerException(
 					String.format("'rootUrl' is null; please provide Mandrill URL (default: %s)", rootUrl));
 		}
+
+		if (mandrillUrlFetcher == null) {
+			throw new NullPointerException("'mandrillUrlFetcher' is null");
+		}
+
+		this.mandrillUrlFetcher = mandrillUrlFetcher;
 		this.key = key;
-		users = new MandrillUsersApi(key, rootUrl);
-		messages = new MandrillMessagesApi(key, rootUrl);
-		tags = new MandrillTagsApi(key, rootUrl);
-		rejects = new MandrillRejectsApi(key, rootUrl);
-		whitelists = new MandrillWhitelistsApi(key, rootUrl);
-		senders = new MandrillSendersApi(key, rootUrl);
-		urls = new MandrillUrlsApi(key, rootUrl);
-		templates = new MandrillTemplatesApi(key, rootUrl);
-		webhooks = new MandrillWebhooksApi(key, rootUrl);
-		subaccounts = new MandrillSubaccountsApi(key, rootUrl);
-		inbound = new MandrillInboundApi(key, rootUrl);
-		exports = new MandrillExportsApi(key, rootUrl);
-		ips = new MandrillIpsApi(key, rootUrl);
+		users = new MandrillUsersApi(key, rootUrl, mandrillUrlFetcher);
+		messages = new MandrillMessagesApi(key, rootUrl, mandrillUrlFetcher);
+		tags = new MandrillTagsApi(key, rootUrl, mandrillUrlFetcher);
+		rejects = new MandrillRejectsApi(key, rootUrl, mandrillUrlFetcher);
+		whitelists = new MandrillWhitelistsApi(key, rootUrl, mandrillUrlFetcher);
+		senders = new MandrillSendersApi(key, rootUrl, mandrillUrlFetcher);
+		urls = new MandrillUrlsApi(key, rootUrl, mandrillUrlFetcher);
+		templates = new MandrillTemplatesApi(key, rootUrl, mandrillUrlFetcher);
+		webhooks = new MandrillWebhooksApi(key, rootUrl, mandrillUrlFetcher);
+		subaccounts = new MandrillSubaccountsApi(key, rootUrl, mandrillUrlFetcher);
+		inbound = new MandrillInboundApi(key, rootUrl, mandrillUrlFetcher);
+		exports = new MandrillExportsApi(key, rootUrl, mandrillUrlFetcher);
+		ips = new MandrillIpsApi(key, rootUrl, mandrillUrlFetcher);
 	}
 
 	/**
@@ -130,5 +138,7 @@ public class MandrillApi {
 	public MandrillIpsApi ips() {
 		return ips;
 	}
+
+	public MandrillUrlFetcher urlFetcher() {return mandrillUrlFetcher;}
 	
 }
