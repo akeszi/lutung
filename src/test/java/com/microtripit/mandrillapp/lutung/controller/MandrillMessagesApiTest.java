@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.junit.Assume;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.microtripit.mandrillapp.lutung.MandrillTestCase;
@@ -37,6 +38,7 @@ import junit.framework.Assert;
  * @author rschreijer
  * @since Mar 21, 2013
  */
+@Ignore
 public final class MandrillMessagesApiTest extends MandrillTestCase {
 
 	@Test(expected=MandrillApiError.class)

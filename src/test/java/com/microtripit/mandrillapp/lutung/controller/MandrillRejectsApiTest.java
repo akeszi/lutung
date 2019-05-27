@@ -7,6 +7,7 @@ import java.io.IOException;
 
 import junit.framework.Assert;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.microtripit.mandrillapp.lutung.MandrillTestCase;
@@ -16,6 +17,7 @@ import com.microtripit.mandrillapp.lutung.model.MandrillApiError;
  * @author rschreijer
  * @since Mar 21, 2013
  */
+@Ignore
 public final class MandrillRejectsApiTest extends MandrillTestCase {
 	
 	@Test(expected=MandrillApiError.class)

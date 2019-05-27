@@ -8,6 +8,7 @@ import java.util.HashMap;
 
 import junit.framework.Assert;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.microtripit.mandrillapp.lutung.MandrillTestCase;
@@ -19,6 +20,7 @@ import com.microtripit.mandrillapp.lutung.view.MandrillTimeSeries;
  * @author rschreijer
  * @since Mar 22, 2013
  */
+@Ignore
 public final class MandrillTemplatesApiTest extends MandrillTestCase {
 
 	@Test(expected=MandrillApiError.class)

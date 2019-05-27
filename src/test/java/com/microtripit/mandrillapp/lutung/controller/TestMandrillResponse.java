@@ -8,7 +8,7 @@ import java.io.IOException;
 
 public class TestMandrillResponse implements MandrillHttpResponse {
 
-	public TestMandrillResponse(HttpResponse httpResponse) throws IOException {
+	TestMandrillResponse(HttpResponse httpResponse) throws IOException {
 		statusCode = httpResponse.getStatusLine().getStatusCode();
 		responseString = EntityUtils.toString(httpResponse.getEntity());
 	}

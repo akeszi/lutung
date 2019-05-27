@@ -130,7 +130,4 @@ public class TestMandrillHttpUrlFetcher implements MandrillUrlFetcher {
 		request.setEntity(entity);
 		return request;
 	}
-
-
-
 }

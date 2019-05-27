@@ -16,6 +16,7 @@ import org.junit.Test;
 public final class MandrillApiTest extends MandrillTestCase {
 	
 	@Test
+	@Ignore
 	public final void testApiKey() {
 		final String key = mandrillApi.getKey();
 		Assert.assertNotNull(key);

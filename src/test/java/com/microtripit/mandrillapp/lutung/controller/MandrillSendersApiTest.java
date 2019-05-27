@@ -7,6 +7,7 @@ import java.io.IOException;
 
 import junit.framework.Assert;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.microtripit.mandrillapp.lutung.MandrillTestCase;
@@ -20,6 +21,7 @@ import com.microtripit.mandrillapp.lutung.view.MandrillTimeSeries;
  * @author rschreijer
  * @since Mar 21, 2013
  */
+@Ignore
 public final class MandrillSendersApiTest extends MandrillTestCase {
 	
 	@Test
