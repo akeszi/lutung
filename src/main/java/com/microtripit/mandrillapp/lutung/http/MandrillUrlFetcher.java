@@ -1,4 +1,6 @@
-package com.microtripit.mandrillapp.lutung.model;
+package com.microtripit.mandrillapp.lutung.http;
+
+import com.microtripit.mandrillapp.lutung.model.MandrillRequest;
 
 import java.io.IOException;
 

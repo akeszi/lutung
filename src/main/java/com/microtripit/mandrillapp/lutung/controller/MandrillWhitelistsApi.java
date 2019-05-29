@@ -3,10 +3,9 @@ package com.microtripit.mandrillapp.lutung.controller;
 import java.io.IOException;
 import java.util.HashMap;
 
-import com.microtripit.mandrillapp.lutung.MandrillApi;
 import com.microtripit.mandrillapp.lutung.model.MandrillApiError;
 import com.microtripit.mandrillapp.lutung.model.MandrillHelperClasses.EmailClass;
-import com.microtripit.mandrillapp.lutung.model.MandrillUrlFetcher;
+import com.microtripit.mandrillapp.lutung.http.MandrillUrlFetcher;
 import com.microtripit.mandrillapp.lutung.view.MandrillWhitelistEntry;
 
 public class MandrillWhitelistsApi extends BaseMandrillApi {

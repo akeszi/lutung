@@ -6,11 +6,10 @@ package com.microtripit.mandrillapp.lutung.controller;
 import java.io.IOException;
 import java.util.HashMap;
 
-import com.microtripit.mandrillapp.lutung.MandrillApi;
 import com.microtripit.mandrillapp.lutung.model.MandrillApiError;
 import com.microtripit.mandrillapp.lutung.model.MandrillHelperClasses.MandrillRejectsDeleted;
 import com.microtripit.mandrillapp.lutung.model.MandrillHelperClasses.MandrillRejectsAdded;
-import com.microtripit.mandrillapp.lutung.model.MandrillUrlFetcher;
+import com.microtripit.mandrillapp.lutung.http.MandrillUrlFetcher;
 import com.microtripit.mandrillapp.lutung.view.MandrillRejectsEntry;
 
 /**

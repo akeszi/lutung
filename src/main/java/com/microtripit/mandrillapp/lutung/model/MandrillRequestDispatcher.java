@@ -3,6 +3,8 @@
  */
 package com.microtripit.mandrillapp.lutung.model;
 
+import com.microtripit.mandrillapp.lutung.http.MandrillHttpResponse;
+import com.microtripit.mandrillapp.lutung.http.MandrillUrlFetcher;
 import com.microtripit.mandrillapp.lutung.logging.Logger;
 import com.microtripit.mandrillapp.lutung.logging.LoggerFactory;
 import com.microtripit.mandrillapp.lutung.model.MandrillApiError.MandrillError;

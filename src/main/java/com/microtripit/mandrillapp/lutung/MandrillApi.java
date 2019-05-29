@@ -16,7 +16,7 @@ import com.microtripit.mandrillapp.lutung.controller.MandrillUrlsApi;
 import com.microtripit.mandrillapp.lutung.controller.MandrillUsersApi;
 import com.microtripit.mandrillapp.lutung.controller.MandrillWebhooksApi;
 import com.microtripit.mandrillapp.lutung.controller.MandrillWhitelistsApi;
-import com.microtripit.mandrillapp.lutung.model.MandrillUrlFetcher;
+import com.microtripit.mandrillapp.lutung.http.MandrillUrlFetcher;
 
 /**
  * @author rschreijer

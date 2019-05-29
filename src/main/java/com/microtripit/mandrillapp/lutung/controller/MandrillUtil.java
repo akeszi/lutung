@@ -10,7 +10,7 @@ import java.util.Map;
 import com.microtripit.mandrillapp.lutung.model.MandrillApiError;
 import com.microtripit.mandrillapp.lutung.model.MandrillRequest;
 import com.microtripit.mandrillapp.lutung.model.MandrillRequestDispatcher;
-import com.microtripit.mandrillapp.lutung.model.MandrillUrlFetcher;
+import com.microtripit.mandrillapp.lutung.http.MandrillUrlFetcher;
 
 /**
  * @author rschreijer

@@ -1,9 +1,9 @@
 package com.microtripit.mandrillapp.lutung.controller;
 
 import com.microtripit.mandrillapp.lutung.model.LutungGsonUtils;
-import com.microtripit.mandrillapp.lutung.model.MandrillHttpResponse;
+import com.microtripit.mandrillapp.lutung.http.MandrillHttpResponse;
 import com.microtripit.mandrillapp.lutung.model.MandrillRequest;
-import com.microtripit.mandrillapp.lutung.model.MandrillUrlFetcher;
+import com.microtripit.mandrillapp.lutung.http.MandrillUrlFetcher;
 import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.config.RequestConfig;
@@ -28,8 +28,7 @@ public class TestMandrillHttpUrlFetcher implements MandrillUrlFetcher {
 	public MandrillHttpResponse fetch(MandrillRequest<?> requestModel) {
 
 		HttpResponse response = null;
-		String responseString = null;
-		TestMandrillResponse result = null;
+		MandrillHttpResponse result = null;
 		try {
 			// use proxy?
 			final ProxyData proxyData = detectProxyServer(requestModel.getUrl());
@@ -41,7 +40,10 @@ public class TestMandrillHttpUrlFetcher implements MandrillUrlFetcher {
 			}
 			try {
 				response = httpClient.execute(makeRequest(requestModel));
-				result = new TestMandrillResponse(response);
+				int statusCode = response.getStatusLine().getStatusCode();
+				String responseString = EntityUtils.toString(response.getEntity());
+
+				result = new MandrillHttpResponse(responseString, statusCode);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
