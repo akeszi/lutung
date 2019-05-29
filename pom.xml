@@ -4,7 +4,7 @@
 
     <groupId>com.mandrillapp.wrapper.lutung</groupId>
     <artifactId>lutung</artifactId>
-    <version>0.0.9-skawa-v1</version>
+    <version>0.0.8-skawa-v1</version>
     <name>lutung</name>
     <description>Mandrill API Client for Java</description>
     <url>https://github.com/ma1112/lutung</url>
@@ -22,6 +22,11 @@
             <id>rschreijer</id>
             <name>rschreijer</name>
             <email>yukyuk@gmx.com</email>
+        </developer>
+        <developer>
+            <id>amarinovszki</id>
+            <name>Árpád Marinovszki</name>
+            <email>marinovszki.arpad+lutungrepo@gmail.com</email>
         </developer>
     </developers>
 	<parent>
