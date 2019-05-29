@@ -1,6 +1,7 @@
 package com.microtripit.mandrillapp.lutung.model;
 
-public interface MandrillUrlFetcher {
+import java.io.IOException;
 
-	MandrillHttpResponse fetch(MandrillRequest<?> requestModel);
+public interface MandrillUrlFetcher {
+	MandrillHttpResponse fetch(MandrillRequest<?> requestModel) throws IOException;
 }
