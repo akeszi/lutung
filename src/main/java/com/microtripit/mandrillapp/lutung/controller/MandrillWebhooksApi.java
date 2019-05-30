@@ -8,27 +8,20 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 
-import com.microtripit.mandrillapp.lutung.MandrillApi;
 import com.microtripit.mandrillapp.lutung.model.MandrillApiError;
+import com.microtripit.mandrillapp.lutung.http.MandrillUrlFetcher;
 import com.microtripit.mandrillapp.lutung.view.MandrillWebhook;
 
 /**
  * @author rschreijer
  * @since Mar 19, 2013
  */
-public class MandrillWebhooksApi {
-	private final String key;
-	private final String rootUrl;
+public class MandrillWebhooksApi extends BaseMandrillApi{
 
-	public MandrillWebhooksApi(final String key, final String url) {
-		this.key = key;
-		this.rootUrl = url;
+	public MandrillWebhooksApi(String key, String rootUrl, MandrillUrlFetcher mandrillUrlFetcher) {
+		super(key, rootUrl, mandrillUrlFetcher);
 	}
-	
-	public MandrillWebhooksApi(final String key) {
-		this(key, MandrillApi.rootUrl);
-	}
-	
+
 	/**
 	 * <p>Get the list of all webhooks defined for this account.</p>
 	 * @return An array of {@link MandrillWebhook} objects.
@@ -38,8 +31,8 @@ public class MandrillWebhooksApi {
 	public MandrillWebhook[] list() throws MandrillApiError, 
 			IOException {
 		
-		return MandrillUtil.query(
-				rootUrl+ "webhooks/list.json", 
+		return query(
+				 "webhooks/list.json", 
 				MandrillUtil.paramsWithKey(key), 
 				MandrillWebhook[].class);
 		
@@ -112,7 +105,7 @@ public class MandrillWebhooksApi {
 		params.put("url", url);
 		params.put("description", description);
 		params.put("events", events);
-		return MandrillUtil.query(rootUrl+ "webhooks/add.json", 
+		return query( "webhooks/add.json", 
 				params, MandrillWebhook.class);
 		
 	}
@@ -129,7 +122,7 @@ public class MandrillWebhooksApi {
 		
 		final HashMap<String,Object> params = MandrillUtil.paramsWithKey(key);
 		params.put("id", id);
-		return MandrillUtil.query(rootUrl+ "webhooks/info.json", 
+		return query( "webhooks/info.json", 
 				params, MandrillWebhook.class);
 		
 	}
@@ -195,7 +188,7 @@ public class MandrillWebhooksApi {
 		params.put("url", url);
 		params.put("description", description);
 		params.put("events", events);
-		return MandrillUtil.query(rootUrl+ "webhooks/update.json", 
+		return query( "webhooks/update.json", 
 				params, MandrillWebhook.class);
 		
 	}
@@ -212,7 +205,7 @@ public class MandrillWebhooksApi {
 		
 		final HashMap<String,Object> params = MandrillUtil.paramsWithKey(key);
 		params.put("id", id);
-		return MandrillUtil.query(rootUrl+ "webhooks/delete.json", 
+		return query( "webhooks/delete.json", 
 				params, MandrillWebhook.class);
 		
 	}

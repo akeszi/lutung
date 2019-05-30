@@ -4,12 +4,14 @@ import java.io.IOException;
 
 import junit.framework.Assert;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.microtripit.mandrillapp.lutung.MandrillTestCase;
 import com.microtripit.mandrillapp.lutung.model.MandrillApiError;
 import com.microtripit.mandrillapp.lutung.view.MandrillWhitelistEntry;
 
+@Ignore
 public final class MandrillWhitelistsApiTest extends MandrillTestCase {
 	
 	@Test(expected=MandrillApiError.class)

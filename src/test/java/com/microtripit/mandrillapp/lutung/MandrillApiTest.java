@@ -3,8 +3,10 @@
  */
 package com.microtripit.mandrillapp.lutung;
 
+import com.microtripit.mandrillapp.lutung.view.MandrillMessage;
 import junit.framework.Assert;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -14,6 +16,7 @@ import org.junit.Test;
 public final class MandrillApiTest extends MandrillTestCase {
 	
 	@Test
+	@Ignore
 	public final void testApiKey() {
 		final String key = mandrillApi.getKey();
 		Assert.assertNotNull(key);
@@ -85,4 +88,5 @@ public final class MandrillApiTest extends MandrillTestCase {
 	public final void testIps() {
 		Assert.assertNotNull(mandrillApi.ips());
 	}
+
 }

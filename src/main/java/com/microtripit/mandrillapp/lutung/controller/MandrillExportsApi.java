@@ -8,8 +8,8 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 
-import com.microtripit.mandrillapp.lutung.MandrillApi;
 import com.microtripit.mandrillapp.lutung.model.MandrillApiError;
+import com.microtripit.mandrillapp.lutung.http.MandrillUrlFetcher;
 import com.microtripit.mandrillapp.lutung.view.MandrillExportJobInfo;
 
 /**
@@ -17,19 +17,13 @@ import com.microtripit.mandrillapp.lutung.view.MandrillExportJobInfo;
  * @author rschreijer
  *
  */
-public class MandrillExportsApi {
-	private final String key;
-	private final String rootUrl;
+public class MandrillExportsApi extends BaseMandrillApi {
 
-	public MandrillExportsApi(final String key, final String url) {
-		this.key = key;
-		this.rootUrl = url;
+
+	public MandrillExportsApi(String key, String rootUrl, MandrillUrlFetcher mandrillUrlFetcher) {
+		super(key, rootUrl, mandrillUrlFetcher);
 	}
-	
-	public MandrillExportsApi(final String key) {
-		this(key, MandrillApi.rootUrl);
-	}
-	
+
 	/**
 	 * <p>Returns information about an export job. If the export 
 	 * job's state is 'complete', the returned data will include 
@@ -48,7 +42,7 @@ public class MandrillExportsApi {
 		
 		final HashMap<String,Object> params = MandrillUtil.paramsWithKey(key);
 		params.put("id", id);
-		return MandrillUtil.query(rootUrl+ "exports/info.json", 
+		return query( "exports/info.json",
 				params, MandrillExportJobInfo.class);
 		
 	}
@@ -62,7 +56,7 @@ public class MandrillExportsApi {
 	public MandrillExportJobInfo list() 
 			throws MandrillApiError, IOException {
 		
-		return MandrillUtil.query(rootUrl+ "exports/list.json", 
+		return query( "exports/list.json",
 				MandrillUtil.paramsWithKey(key),
 				MandrillExportJobInfo.class);
 		
@@ -90,7 +84,7 @@ public class MandrillExportsApi {
 		
 		final HashMap<String,Object> params = MandrillUtil.paramsWithKey(key);
 		params.put("notify_email", notifyEmail);
-		return MandrillUtil.query(rootUrl+ "exports/rejects.json", 
+		return query( "exports/rejects.json",
 				params, MandrillExportJobInfo.class);
 		
 	}
@@ -113,7 +107,7 @@ public class MandrillExportsApi {
 		
 		final HashMap<String,Object> params = MandrillUtil.paramsWithKey(key);
 		params.put("notify_email", notifyEmail);
-		return MandrillUtil.query(rootUrl+ "exports/whitelist.json", 
+		return query( "exports/whitelist.json",
 				params, MandrillExportJobInfo.class);
 		
 	}
@@ -163,7 +157,7 @@ public class MandrillExportsApi {
 		params.put("senders", senders);
 		params.put("states", states);
 		params.put("api_keys", apiKeys);
-		return MandrillUtil.query(rootUrl+ "exports/activity.json", 
+		return query( "exports/activity.json",
 				params, MandrillExportJobInfo.class);
 		
 	}

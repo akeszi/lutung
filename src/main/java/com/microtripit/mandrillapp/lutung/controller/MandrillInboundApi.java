@@ -7,8 +7,8 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.HashMap;
 
-import com.microtripit.mandrillapp.lutung.MandrillApi;
 import com.microtripit.mandrillapp.lutung.model.MandrillApiError;
+import com.microtripit.mandrillapp.lutung.http.MandrillUrlFetcher;
 import com.microtripit.mandrillapp.lutung.view.MandrillInboundDomain;
 import com.microtripit.mandrillapp.lutung.view.MandrillInboundRecipient;
 import com.microtripit.mandrillapp.lutung.view.MandrillMailboxRoute;
@@ -17,17 +17,11 @@ import com.microtripit.mandrillapp.lutung.view.MandrillMailboxRoute;
  * @author rschreijer
  * @since Mar 19, 2013
  */
-public class MandrillInboundApi {
-	private final String key;
-	private final String rootUrl;
+public class MandrillInboundApi extends BaseMandrillApi {
 
-	public MandrillInboundApi(final String key, final String url) {
-		this.key = key;
-		this.rootUrl = url;
-	}
-	
-	public MandrillInboundApi(final String key) {
-		this(key, MandrillApi.rootUrl);
+
+	public MandrillInboundApi(String key, String rootUrl, MandrillUrlFetcher mandrillUrlFetcher) {
+		super(key, rootUrl, mandrillUrlFetcher);
 	}
 
 	/**
@@ -40,8 +34,8 @@ public class MandrillInboundApi {
 	 MandrillInboundDomain[] domains() 
 			throws MandrillApiError, IOException {
 		
-		return MandrillUtil.query(
-				rootUrl+ "inbound/domains.json", 
+		return query(
+				 "inbound/domains.json", 
 				MandrillUtil.paramsWithKey(key), 
 				MandrillInboundDomain[].class);
 		
@@ -59,7 +53,7 @@ public class MandrillInboundApi {
 		
 		final HashMap<String,Object> params = MandrillUtil.paramsWithKey(key);
 		params.put("domain", domain);
-		return MandrillUtil.query(rootUrl+ "inbound/routes.json", 
+		return query( "inbound/routes.json", 
 				params, MandrillMailboxRoute[].class);
 		
 	}
@@ -118,7 +112,7 @@ public class MandrillInboundApi {
 		params.put("mail_from", mailFrom);
 		params.put("helo", helo);
 		params.put("client_address", clientAddress);
-		return MandrillUtil.query(rootUrl+ "inbound/send-raw.json", 
+		return query( "inbound/send-raw.json", 
 				params, MandrillInboundRecipient[].class);
 		
 	}

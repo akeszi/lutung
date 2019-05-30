@@ -8,10 +8,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.microtripit.mandrillapp.lutung.MandrillApi;
 import com.microtripit.mandrillapp.lutung.model.MandrillApiError;
 import com.microtripit.mandrillapp.lutung.model.MandrillContentWrapper;
 import com.microtripit.mandrillapp.lutung.model.MandrillHelperClasses.MandrillRenderTemplateResponse;
+import com.microtripit.mandrillapp.lutung.http.MandrillUrlFetcher;
 import com.microtripit.mandrillapp.lutung.view.MandrillTemplate;
 import com.microtripit.mandrillapp.lutung.view.MandrillTimeSeries;
 
@@ -19,17 +19,11 @@ import com.microtripit.mandrillapp.lutung.view.MandrillTimeSeries;
  * @author rschreijer
  * @since Mar 19, 2013
  */
-public class MandrillTemplatesApi {
-	private final String key;
-	private final String rootUrl;
+public class MandrillTemplatesApi extends BaseMandrillApi {
 
-	public MandrillTemplatesApi(final String key, final String url) {
-		this.key = key;
-		this.rootUrl = url;
-	}
-	
-	public MandrillTemplatesApi(final String key) {
-		this(key, MandrillApi.rootUrl);
+
+	public MandrillTemplatesApi(String key, String rootUrl, MandrillUrlFetcher mandrillUrlFetcher) {
+		super(key, rootUrl, mandrillUrlFetcher);
 	}
 
 	/**
@@ -102,7 +96,7 @@ public class MandrillTemplatesApi {
 		params.put("text", text);
 		params.put("publish", publish);
 		params.put("labels", labels);
-		return MandrillUtil.query(rootUrl+ "templates/add.json",
+		return query( "templates/add.json",
 				params, MandrillTemplate.class);
 
 	}
@@ -119,7 +113,7 @@ public class MandrillTemplatesApi {
 
 		final HashMap<String,Object> params = MandrillUtil.paramsWithKey(key);
 		params.put("name", name);
-		return MandrillUtil.query(rootUrl+ "templates/info.json",
+		return query( "templates/info.json",
 				params, MandrillTemplate.class);
 
 	}
@@ -192,7 +186,7 @@ public class MandrillTemplatesApi {
 		params.put("text", text);
 		params.put("publish", publish);
 		params.put("labels", labels);
-		return MandrillUtil.query(rootUrl+ "templates/update.json",
+		return query( "templates/update.json",
 				params, MandrillTemplate.class);
 
 	}
@@ -211,7 +205,7 @@ public class MandrillTemplatesApi {
 
 		final HashMap<String,Object> params = MandrillUtil.paramsWithKey(key);
 		params.put("name", name);
-		return MandrillUtil.query(rootUrl+ "templates/publish.json",
+		return query( "templates/publish.json",
 				params, MandrillTemplate.class);
 
 	}
@@ -228,7 +222,7 @@ public class MandrillTemplatesApi {
 
 		final HashMap<String,Object> params = MandrillUtil.paramsWithKey(key);
 		params.put("name", name);
-		return MandrillUtil.query(rootUrl+ "templates/delete.json",
+		return query( "templates/delete.json",
 				params, MandrillTemplate.class);
 
 	}
@@ -243,8 +237,8 @@ public class MandrillTemplatesApi {
 	public MandrillTemplate[] list()
 			throws MandrillApiError, IOException {
 
-		return MandrillUtil.query(
-				rootUrl+ "templates/list.json",
+		return query(
+				 "templates/list.json",
 				MandrillUtil.paramsWithKey(key),
 				MandrillTemplate[].class);
 
@@ -264,8 +258,8 @@ public class MandrillTemplatesApi {
 		final HashMap<String,Object> params = MandrillUtil.paramsWithKey(key);
 		params.put("label", label);
 
-		return MandrillUtil.query(
-				rootUrl+ "templates/list.json",
+		return query(
+				 "templates/list.json",
 				params,
 				MandrillTemplate[].class);
 	}
@@ -284,7 +278,7 @@ public class MandrillTemplatesApi {
 
 		final HashMap<String,Object> params = MandrillUtil.paramsWithKey(key);
 		params.put("name", name);
-		return MandrillUtil.query(rootUrl+ "templates/time-series.json",
+		return query( "templates/time-series.json",
 				params, MandrillTimeSeries[].class);
 
 	}
@@ -330,7 +324,7 @@ public class MandrillTemplatesApi {
 			}
 			params.put("merge_vars", vars);
 		}
-		return MandrillUtil.query(rootUrl+ "templates/render.json",
+		return query( "templates/render.json",
 				params, MandrillRenderTemplateResponse.class).getHtml();
 
 	}

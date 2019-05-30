@@ -5,11 +5,7 @@ package com.microtripit.mandrillapp.lutung.model;
 
 import com.microtripit.mandrillapp.lutung.logging.Logger;
 import com.microtripit.mandrillapp.lutung.logging.LoggerFactory;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.methods.HttpRequestBase;
-import org.apache.http.entity.StringEntity;
 
-import java.io.IOException;
 import java.util.Map;
 
 /**
@@ -39,8 +35,9 @@ public final class MandrillRequest<OUT> implements RequestModel<OUT> {
 	public final String getUrl() {
 		return url;
 	}
+	public final Map<String,? extends Object> getRequestParams() {return requestParams;}
 
-	public final HttpRequestBase getRequest() throws IOException {
+	/*public final HttpRequestBase getRequest() throws IOException {
 		final String paramsStr = LutungGsonUtils.getGson().toJson(
 				requestParams, requestParams.getClass());
         log.debug("raw content for request:\n" +paramsStr);
@@ -50,7 +47,7 @@ public final class MandrillRequest<OUT> implements RequestModel<OUT> {
 		request.setEntity(entity);
 		return request;
 		
-	}
+	}*/
 
 	public final boolean validateResponseStatus(final int httpResponseStatus) {
 		return (httpResponseStatus == 200);

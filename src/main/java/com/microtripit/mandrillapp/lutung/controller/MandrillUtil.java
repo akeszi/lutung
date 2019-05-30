@@ -10,6 +10,7 @@ import java.util.Map;
 import com.microtripit.mandrillapp.lutung.model.MandrillApiError;
 import com.microtripit.mandrillapp.lutung.model.MandrillRequest;
 import com.microtripit.mandrillapp.lutung.model.MandrillRequestDispatcher;
+import com.microtripit.mandrillapp.lutung.http.MandrillUrlFetcher;
 
 /**
  * @author rschreijer
@@ -35,13 +36,14 @@ final class MandrillUtil {
 	 * @throws MandrillApiError Mandrill API Error
 	 * @throws IOException IO Error
 	 */
-	protected static final <OUT> OUT query(final String url, 
-			final Map<String,Object> params, Class<OUT> responseType) 
+	protected static final <OUT> OUT query(final String url,
+	                                       final Map<String, Object> params, Class<OUT> responseType,
+	                                       MandrillUrlFetcher urlFetcher)
 					throws MandrillApiError, IOException {
 		
 		final MandrillRequest<OUT> requestModel = 
 				new MandrillRequest<OUT>(url, params, responseType);
-		return MandrillRequestDispatcher.execute(requestModel);
+		return MandrillRequestDispatcher.execute(requestModel, urlFetcher);
 		
 	}
 }
