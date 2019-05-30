@@ -1,6 +1,18 @@
 Lutung - Java Mandrill API
 ======
 
+About this fork
+------------
+
+This is a fork of the original Lutung repository, which can be found [here](https://github.com/rschreijer/lutung)
+
+I wanted the use the broad functionality of the Lutung library, without importing the apache httpclient library, which is a dependency of the original Lutung library.
+
+In this fork I eliminate that dependency, leaving it to the user to define the way http requests are handled. 
+
+
+The usage of this fork is thus a bit different than the original Lutung library. The developer have to implement the MandrillUrlFetcher and the MandrillHttpResonse interfaces. The former is responsible of the HTTP communication, the latter is a 
+
 [![Join the chat at https://gitter.im/rschreijer/lutung](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/rschreijer/lutung?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 Lutung - a Java interface to the [Mandrill](http://www.mandrill.com/) API. 
