@@ -29,7 +29,21 @@
             <email>marinovszki.arpad+lutungrepo@gmail.com</email>
         </developer>
     </developers>
-	<parent>
+
+    <distributionManagement>
+        <repository>
+            <id>skawa-artifactory-github</id>
+            <name>Skawa artifactory</name>
+            <url>https://arti.skawa.hu/artifactory/github-fork</url>
+        </repository>
+        <snapshotRepository>
+            <id>skawa-artifactory-github</id>
+            <name>Skawa artifactory</name>
+            <url>https://arti.skawa.hu/artifactory/github-fork</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+    <parent>
 		<groupId>org.sonatype.oss</groupId>
 		<artifactId>oss-parent</artifactId>
 		<version>7</version>
