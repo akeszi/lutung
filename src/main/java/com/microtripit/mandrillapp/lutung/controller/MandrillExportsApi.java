@@ -27,7 +27,7 @@ public class MandrillExportsApi extends BaseMandrillApi {
 	/**
 	 * <p>Returns information about an export job. If the export 
 	 * job's state is 'complete', the returned data will include 
-	 * a URL you can use to fetch the results. Every export job 
+	 * a URL you can use to fetchPOST the results. Every export job
 	 * produces a zip archive, but the format of the archive is 
 	 * distinct for each job type. The api calls that initiate 
 	 * exports include more details about the output format for 
