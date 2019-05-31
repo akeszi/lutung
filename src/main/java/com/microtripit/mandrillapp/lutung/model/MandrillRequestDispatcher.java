@@ -22,7 +22,9 @@ public final class MandrillRequestDispatcher {
 	public static final <T> T execute(final MandrillRequest<T> requestModel, MandrillUrlFetcher urlFetcher) throws MandrillApiError, IOException {
 
             log.debug("starting request '" +requestModel.getUrl()+ "'");
-            MandrillHttpResponse response = urlFetcher.fetch(requestModel);
+		final String paramsStr = LutungGsonUtils.getGson().toJson(
+				requestModel.getRequestParams(), requestModel.getRequestParams().getClass());
+            MandrillHttpResponse response = urlFetcher.fetchPOST(paramsStr, requestModel.getUrl());
 			if( requestModel.validateResponseStatus(response.getStatusCode()) ) {
 				try {
 					return requestModel.handleResponse(response.getResponseString());
