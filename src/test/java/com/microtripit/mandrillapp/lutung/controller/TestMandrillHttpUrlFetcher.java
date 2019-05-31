@@ -1,8 +1,6 @@
 package com.microtripit.mandrillapp.lutung.controller;
 
-import com.microtripit.mandrillapp.lutung.model.LutungGsonUtils;
 import com.microtripit.mandrillapp.lutung.http.MandrillHttpResponse;
-import com.microtripit.mandrillapp.lutung.model.MandrillRequest;
 import com.microtripit.mandrillapp.lutung.http.MandrillUrlFetcher;
 import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
@@ -25,13 +23,13 @@ import java.util.List;
 
 public class TestMandrillHttpUrlFetcher implements MandrillUrlFetcher {
 	@Override
-	public MandrillHttpResponse fetch(MandrillRequest<?> requestModel) {
+	public MandrillHttpResponse fetchPOST(String payload, String url) {
 
 		HttpResponse response = null;
 		MandrillHttpResponse result = null;
 		try {
 			// use proxy?
-			final ProxyData proxyData = detectProxyServer(requestModel.getUrl());
+			final ProxyData proxyData = detectProxyServer(url);
 			if (proxyData != null) {
 				final HttpHost proxy = new HttpHost(proxyData.host,
 						proxyData.port);
@@ -39,7 +37,7 @@ public class TestMandrillHttpUrlFetcher implements MandrillUrlFetcher {
 						proxy);
 			}
 			try {
-				response = httpClient.execute(makeRequest(requestModel));
+				response = httpClient.execute(makeRequest(payload, url));
 				int statusCode = response.getStatusLine().getStatusCode();
 				String responseString = EntityUtils.toString(response.getEntity());
 
@@ -123,12 +121,10 @@ public class TestMandrillHttpUrlFetcher implements MandrillUrlFetcher {
 
 		}
 
-		private HttpRequestBase makeRequest(MandrillRequest<?> requestModel){
-		final String paramsStr = LutungGsonUtils.getGson().toJson(
-				requestModel.getRequestParams(), requestModel.getRequestParams().getClass());
-		final StringEntity entity = new StringEntity(paramsStr, "UTF-8");
+		private HttpRequestBase makeRequest(String payload, String url){
+		final StringEntity entity = new StringEntity(payload, "UTF-8");
 		entity.setContentType("application/json");
-		final HttpPost request = new HttpPost(requestModel.getUrl());
+		final HttpPost request = new HttpPost(url);
 		request.setEntity(entity);
 		return request;
 	}
